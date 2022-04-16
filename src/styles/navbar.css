@@ -48,7 +48,7 @@
     justify-content: space-between;
     margin-right: 2rem;
 }
-.top #buttons button{
+.top #buttons .icon{
     background-color: #fff;
     border-radius: 6px;
     border: none;
@@ -63,7 +63,7 @@
         padding: 0;
         margin-right: .7rem;
     }
-    .top #buttons button{
+    .top #buttons .icon{
         font-size: 1.3rem;
     }
 }
@@ -82,7 +82,7 @@
         margin: 0;
         padding: 0;
     }
-    .top #buttons button{
+    .top #buttons .icon{
         padding: 1rem;
         width: 33%;
     }

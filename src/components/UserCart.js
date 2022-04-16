@@ -8,11 +8,13 @@ const UserCart = ({ isOpen }) => {
 
     const [totalCart , setTotalCart] = useState(0);
 
-    console.log(totalCart)
+    
     for(let i = 0; i <= (cartProducts.length - 1); i++){
-        console.log((cartProducts[i].price) * (cartProducts[i].productsInCart.quantity));
-        setTotalCart()
-        
+        console.log(Number(cartProducts[i].price));
+        for(let j = 0; j <= (cartProducts.length - 1); j++){
+            console.log(cartProducts[j].productsInCart.quantity, "jola")
+            console.log((cartProducts[i].price) * (cartProducts[j].productsInCart.quantity), "hooh")
+        }
     }
 
     return (

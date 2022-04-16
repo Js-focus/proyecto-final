@@ -1,0 +1,71 @@
+.purchases{
+    padding: 13px 20px;
+}
+.route{
+    margin: 0;
+    margin-bottom: 30px;
+}
+.route .link{
+    margin: 0;
+}
+.my-purchases h2{
+    text-align: left;
+    color: #515151;
+    margin-bottom: 40px;
+}
+.my-purchases .purchases-contain{
+    color: #515151;
+    border: 1px solid #dcd9d9;
+    border-radius: 1rem;
+    margin-bottom: 20px;
+
+}
+.my-purchases .purchases-contain .date{
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #dcd9d9;
+}
+.my-purchases .purchases-contain .ul-contain{
+    padding: 30px 15px 10px 15px;
+}
+.my-purchases .purchases-contain .ul-contain li{
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 25% auto auto auto;
+}
+.my-purchases .purchases-contain .ul-contain li .div-flex{
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+.my-purchases .purchases-contain .ul-contain li .div-flex p{
+    padding-top: .5rem;
+}
+.my-purchases .purchases-contain .ul-contain li .div-flex strong{
+    padding-top: .5rem;
+}
+@media only screen and (min-width: 576px){
+    .purchases{
+        margin: 0 auto;
+        max-width: 579px;
+    }
+}
+@media only screen and (min-width: 768px){
+    .purchases{
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+        max-width: 721px;
+    }
+    .my-purchases .purchases-contain .date{
+        padding: 20px 30px;
+    }
+}
+@media only screen and (min-width: 992px){
+    .purchases{
+        margin: 0 auto;
+        max-width: 900px;
+    }
+
+}

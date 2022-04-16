@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getUserCartThunk, loginThunk } from '../redux/actions';
+import { Link, useNavigate } from 'react-router-dom';
+import { getUserCartThunk, getUserPurchasesThunk, loginThunk } from '../redux/actions';
 import '../styles/navbar.css';
 import UserCart from './UserCart';
 
@@ -15,10 +15,21 @@ const NavBar = () => {
     const [isCartOpen, setIsCartOpen ] = useState(false);
 
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate();
+
     const openCart = () => {
         setIsCartOpen(!isCartOpen)
         dispatch(getUserCartThunk())
+    }
+    const openPurchases = () => {
+        dispatch(getUserPurchasesThunk())
+        navigate("/purchases")
+        if(localStorage.getItem("token")){
+            setIsLoginOpen(false)
+        } else{
+            setIsLoginOpen(true)
+        }
+        
     }
 
     const login = (e) => {
@@ -46,7 +57,10 @@ const NavBar = () => {
                     <button onClick={() => setIsLoginOpen(!isLoginOpen)} className='icon'>
                         <i className="fa-regular fa-user"></i>
                     </button>
-                    <button className='icon'>
+                    <button     
+                    className='icon'
+                    onClick={() => openPurchases()}
+                    >
                         <i className="fa-solid fa-box-archive"></i>
                     </button>
                     <button 

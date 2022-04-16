@@ -11,7 +11,8 @@ export const actions ={
     setIsLoading: "SET_IS_LOADING",
     setCategories: "SET_CATEGORIES",
     setQuantity: "SET-QUANTITY",
-    setProductsCart: "SET_PRODUCTS_CART"
+    setProductsCart: "SET_PRODUCTS_CART",
+    setUserPurchases: "SET_USER_PURCHASES"
 }
 
 
@@ -44,7 +45,10 @@ export const setProductsCart = products => ({
     type: actions.setProductsCart,
     payload: products
 })
-
+export const setUserPurchases = purchases => ({
+    type: actions.setUserPurchases,
+    payload: purchases
+})
 
 export const getProductsThunk = () => {
     return dispatch => {
@@ -101,10 +105,18 @@ export const getUserCartThunk = () => {
         return axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/cart", getConfig())
         .then(res => dispatch(setProductsCart(res.data.data.cart.products)))
         .catch(error => {
-            if(error.response.status === 404){
+            if(error.response?.status === 404){
                 console.log("El carrito esta vacio")
             }
         })
         .finally(dispatch(setIsLoading(false)))
+    }
+}
+export const getUserPurchasesThunk = () => {
+    return dispatch => {
+        dispatch(setIsLoading(true))
+        return axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/purchases", getConfig())
+        .then(res => dispatch(setUserPurchases(res.data.data.purchases)))
+        .finally(() => dispatch(setIsLoading(false)))
     }
 }
