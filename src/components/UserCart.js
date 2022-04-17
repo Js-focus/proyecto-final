@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { deleteProductCartThunk, getUserPurchasesThunk, purchaseCartThunk} from '../redux/actions';
 import '../styles/userCart.css';
 
 const UserCart = ({ isOpen }) => {
     
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const cartProducts = useSelector(state => state.productsCart);
 
-    const [totalCart , setTotalCart] = useState(0);
-
-    
-    for(let i = 0; i <= (cartProducts.length - 1); i++){
-        console.log(Number(cartProducts[i].price));
-        for(let j = 0; j <= (cartProducts.length - 1); j++){
-            console.log(cartProducts[j].productsInCart.quantity, "jola")
-            console.log((cartProducts[i].price) * (cartProducts[j].productsInCart.quantity), "hooh")
+    const deleteProduct = id =>{
+        dispatch(deleteProductCartThunk(id));
+       
+    }
+    const purchaseCart = () => {
+        const userData = JSON.parse(localStorage.getItem("user"));
+        if(cartProducts.length > 0){
+            dispatch(purchaseCartThunk(userData))
+            dispatch(getUserPurchasesThunk())
+        }else{
+            console.log("no no no no no")
         }
     }
 
@@ -22,37 +29,48 @@ const UserCart = ({ isOpen }) => {
             {
                 localStorage.getItem("token") && (
                     <div className={`cart-modal ${isOpen ? 'open' : ''}`}>
-                        {
-                            cartProducts?.map(product => (
-                                <div key={product.id}>
-                                    <ul>
-                                        <li>
-                                            <h4>{product.brand}</h4>
-                                            <p>{product.title}</p>
-                                        </li>
-                                        <button>
-                                            <i className="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </ul>
-                                    <ul>
-                                        <li>{product.productsInCart.quantity}</li>
-                                        <li>
-                                            <h4>Total</h4>
+                        <div className="open-modal">
+                            <h4>Carrito de compras</h4>
+                            {
+                                cartProducts?.map(product => (
+                                    
+                                    <div 
+                                    key={product.id} 
+                                    className="details"
+                                    onClick={() => navigate(`/shop/${product.id}`)}
+                                    >
+                                        <ul className='details-top'>
+                                            <li className='brand'>
+                                                <span>{product.brand}</span>
+                                                <p>{product.title}</p>
+                                                <div className='quantity'>
+                                                    {product.productsInCart.quantity}
+                                                </div>
+                                            </li>
+                                            <button onClick={() => deleteProduct(product.id)}>
+                                                <i className="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </ul>
+                                        <div className='details-bottom'>
+                                            <span>Total</span>
                                             <strong>
                                                 $ {product.price * product.productsInCart.quantity}
                                             </strong>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ))
-                        }
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
                         <div className='modal-bottom'>
                             <div>
                                 <span>Total</span>
                                 <strong>
-                                    $ 
+                                    $ {1200}
                                 </strong>
                             </div>
+                            <button onClick={() => purchaseCart()}>
+                                Checkout
+                            </button>
                         </div>
                         
                     </div>

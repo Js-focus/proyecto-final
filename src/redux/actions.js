@@ -120,3 +120,19 @@ export const getUserPurchasesThunk = () => {
         .finally(() => dispatch(setIsLoading(false)))
     }
 }
+export const deleteProductCartThunk = idProduct => {
+    return dispatch => {
+        dispatch(setIsLoading(true))
+        return axios.delete(`https://ecommerce-api-react.herokuapp.com/api/v1/cart/${idProduct}`, getConfig())
+        .catch(error => console.log(error.response?.status))
+        .finally(() => dispatch(setIsLoading(false)))
+    }
+}
+export const purchaseCartThunk = body => {
+    return dispatch => {
+        dispatch(setIsLoading(true))
+        return axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, body , getConfig())
+        .catch(error => console.log(error.response?.status))
+        .finally(() => dispatch(setIsLoading(false)))
+    }
+}

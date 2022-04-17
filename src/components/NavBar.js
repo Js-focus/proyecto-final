@@ -38,7 +38,8 @@ const NavBar = () => {
         
         dispatch(loginThunk( credentials ))
             .then(res => {
-                localStorage.setItem("token", res.data.data?.token)
+                localStorage.setItem("token", res.data.data?.token);
+                localStorage.setItem("user", JSON.stringify(res.data.data?.user));
                 setLogError("");
                 setIsLoginOpen(false);
             })
