@@ -26,60 +26,62 @@ const Home = () => {
 
 
     return (
-        <div className='content-sections'>
-          <div className='input-search'>
-            <form onSubmit={searchName}>
-              <input 
-              type="text"
-              placeholder='What are you looking for?'
-              value={name}
-              onChange={e => setName(e.target.value)}
-              />
-              <button>
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-          </div>
-
-          <aside>
-            <h2>Category</h2>
-            {
-              categories.categories?.map(category => (
-                <button 
-                key={category.id}
-                onClick={() => dispatch(filterCategoryThunk(category.id))}
-                >
-                  {category.name}
+      <div className='home'>
+          <div className='content-sections'>
+            <div className='input-search'>
+              <form onSubmit={searchName}>
+                <input 
+                type="text"
+                placeholder='What are you looking for?'
+                value={name}
+                onChange={e => setName(e.target.value)}
+                />
+                <button>
+                  <i className="fa-solid fa-magnifying-glass"></i>
                 </button>
-              ))
-            }
-          </aside>
-          
-          <ul className='info-product'>
+              </form>
+            </div>
+
+            <aside>
+              <h2>Category</h2>
+              {
+                categories.categories?.map(category => (
+                  <button 
+                  key={category.id}
+                  onClick={() => dispatch(filterCategoryThunk(category.id))}
+                  >
+                    {category.name}
+                  </button>
+                ))
+              }
+            </aside>
             
-            {products.products?.map(productItem => (
+            <ul className='info-product'>
               
-              <Link to={`/shop/${productItem.id}`} key={productItem.id} className='info'>
+              {products.products?.map(productItem => (
+                
+                <Link to={`/shop/${productItem.id}`} key={productItem.id} className='info'>
 
-                <div className='contain'>
-                    <img src={productItem.productImgs?.[1]} alt="" />
-                    <img src={productItem.productImgs?.[2]} alt="" className='over'/>
-                </div>
-                <div className='product-price'>
-                  <li>{productItem.title}</li>
-                  <div>
-                    <li>
-                      <p>Price</p>
-                      <strong> $ {productItem.price} </strong>
-                    </li>
+                  <div className='contain'>
+                      <img src={productItem.productImgs?.[1]} alt="" />
+                      <img src={productItem.productImgs?.[2]} alt="" className='over'/>
                   </div>
-                </div>
-              
-              </Link>
-              
-            ))}
+                  <div className='product-price'>
+                    <li>{productItem.title}</li>
+                    <div>
+                      <li>
+                        <p>Price</p>
+                        <strong> $ {productItem.price} </strong>
+                      </li>
+                    </div>
+                  </div>
+                
+                </Link>
+                
+              ))}
 
-          </ul>
+            </ul>
+          </div>
         </div>
     );
 };

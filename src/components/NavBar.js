@@ -20,6 +20,11 @@ const NavBar = () => {
     const openCart = () => {
         setIsCartOpen(!isCartOpen)
         dispatch(getUserCartThunk())
+        .catch(error => {
+            if(error.response?.status === 404){
+              alert("Nothing add in the cart")
+            }
+        })
     }
     const openPurchases = () => {
         dispatch(getUserPurchasesThunk())
@@ -49,70 +54,72 @@ const NavBar = () => {
     }
 
     return (
-        <div className='navbar'>
-            <nav className='top'>
-                <div id='name'>
-                    <Link to="/" className='link'>e-commerce</Link>
-                </div>
-                <div id='buttons'>
-                    <button onClick={() => setIsLoginOpen(!isLoginOpen)} className='icon'>
-                        <i className="fa-regular fa-user"></i>
-                    </button>
-                    <button     
-                    className='icon'
-                    onClick={() => openPurchases()}
-                    >
-                        <i className="fa-solid fa-box-archive"></i>
-                    </button>
-                    <button 
-                    className='icon' 
-                    onClick={() => openCart()}
-                    >
-                        <i className="fa-solid fa-cart-shopping"></i>
-                    </button>
-                </div>
-                
-            </nav>
-
-            {
-                isLoginOpen && 
-
-                <div>
+        <div className='position-nav'>
+            <div className='navbar'>
+                <nav className='top'>
+                    <div id='name'>
+                        <Link to="/" className='link'>e-commerce</Link>
+                    </div>
+                    <div id='buttons'>
+                        <button onClick={() => setIsLoginOpen(!isLoginOpen)} className='icon'>
+                            <i className="fa-regular fa-user"></i>
+                        </button>
+                        <button     
+                        className='icon'
+                        onClick={() => openPurchases()}
+                        >
+                            <i className="fa-solid fa-box-archive"></i>
+                        </button>
+                        <button 
+                        className='icon' 
+                        onClick={() => openCart()}
+                        >
+                            <i className="fa-solid fa-cart-shopping"></i>
+                        </button>
+                    </div>
                     
+                </nav>
+
                 {
-                    localStorage.getItem("token") ? (
-                        <button onClick={() => localStorage.setItem("token", "") }> 
-                        Log out 
-                        </button> 
-                    ) : (
-                    <form onSubmit={login} className={`login ${isLoginOpen ? 'open' : ''}`}>
-                        <input 
-                        type="email" 
-                        placeholder='email' 
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        />
+                    isLoginOpen && 
 
-                        <input 
-                        type="password" 
-                        placeholder='password' 
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        />
-
-                        <button>Submit</button>
-                        <p>
-                            {logError}
-                        </p>
+                    <div>
                         
-                    </form>
-                    )
-                }
+                    {
+                        localStorage.getItem("token") ? (
+                            <button onClick={() => localStorage.setItem("token", "") }> 
+                            Log out 
+                            </button> 
+                        ) : (
+                        <form onSubmit={login} className={`login ${isLoginOpen ? 'open' : ''}`}>
+                            <input 
+                            type="email" 
+                            placeholder='email' 
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            />
 
-                    
-                </div>
-            }
-            <UserCart isOpen={isCartOpen} setIsLoginOpen={setIsLoginOpen} isLoginOpen={isLoginOpen}/>
+                            <input 
+                            type="password" 
+                            placeholder='password' 
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            />
+
+                            <button>Submit</button>
+                            <p>
+                                {logError}
+                            </p>
+                            
+                        </form>
+                        )
+                    }
+
+                        
+                    </div>
+                }
+                <UserCart isOpen={isCartOpen} setIsLoginOpen={setIsLoginOpen} isLoginOpen={isLoginOpen}/>
+            </div>
         </div>
     );
 };

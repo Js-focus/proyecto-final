@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteProductCartThunk, getUserPurchasesThunk, purchaseCartThunk} from '../redux/actions';
+import { deleteProductCartThunk, purchaseCartThunk} from '../redux/actions';
 import '../styles/userCart.css';
 
 const UserCart = ({ isOpen }) => {
@@ -10,19 +10,6 @@ const UserCart = ({ isOpen }) => {
     const navigate = useNavigate();
     const cartProducts = useSelector(state => state.productsCart);
 
-    const deleteProduct = id =>{
-        dispatch(deleteProductCartThunk(id));
-       
-    }
-    const purchaseCart = () => {
-        const userData = JSON.parse(localStorage.getItem("user"));
-        if(cartProducts.length > 0){
-            dispatch(purchaseCartThunk(userData))
-            dispatch(getUserPurchasesThunk())
-        }else{
-            console.log("no no no no no")
-        }
-    }
 
     return (
         <>
@@ -47,7 +34,7 @@ const UserCart = ({ isOpen }) => {
                                                     {product.productsInCart.quantity}
                                                 </div>
                                             </li>
-                                            <button onClick={() => deleteProduct(product.id)}>
+                                            <button onClick={() => dispatch(deleteProductCartThunk(product.id))}>
                                                 <i className="fa-solid fa-trash-can"></i>
                                             </button>
                                         </ul>
@@ -68,7 +55,7 @@ const UserCart = ({ isOpen }) => {
                                     $ {1200}
                                 </strong>
                             </div>
-                            <button onClick={() => purchaseCart()}>
+                            <button onClick={() => dispatch(purchaseCartThunk())}>
                                 Checkout
                             </button>
                         </div>

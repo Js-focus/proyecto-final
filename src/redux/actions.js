@@ -104,11 +104,6 @@ export const getUserCartThunk = () => {
         dispatch(setIsLoading(true))
         return axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/cart", getConfig())
         .then(res => dispatch(setProductsCart(res.data.data.cart.products)))
-        .catch(error => {
-            if(error.response?.status === 404){
-                console.log("El carrito esta vacio")
-            }
-        })
         .finally(dispatch(setIsLoading(false)))
     }
 }
@@ -116,23 +111,23 @@ export const getUserPurchasesThunk = () => {
     return dispatch => {
         dispatch(setIsLoading(true))
         return axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/purchases", getConfig())
-        .then(res => dispatch(setUserPurchases(res.data.data.purchases)))
-        .finally(() => dispatch(setIsLoading(false)))
+            .then(res => dispatch(setUserPurchases(res.data.data.purchases)))
+            .finally(() => dispatch(setIsLoading(false)))
     }
 }
 export const deleteProductCartThunk = idProduct => {
     return dispatch => {
         dispatch(setIsLoading(true))
         return axios.delete(`https://ecommerce-api-react.herokuapp.com/api/v1/cart/${idProduct}`, getConfig())
-        .catch(error => console.log(error.response?.status))
-        .finally(() => dispatch(setIsLoading(false)))
+            .then(() => dispatch(getUserCartThunk()))
+            .finally(() => dispatch(setIsLoading(false)))
     }
 }
-export const purchaseCartThunk = body => {
+export const purchaseCartThunk = () => {
     return dispatch => {
         dispatch(setIsLoading(true))
-        return axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, body , getConfig())
-        .catch(error => console.log(error.response?.status))
-        .finally(() => dispatch(setIsLoading(false)))
+        return axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, {} , getConfig())
+            .then(() => dispatch(getUserCartThunk()))
+            .finally(() => dispatch(setIsLoading(false)))
     }
 }
